@@ -2,10 +2,13 @@ package pl.natusiek.practice.impl.structure
 
 import pl.natusiek.practice.api.repositories.QueueRepository
 import pl.natusiek.practice.api.structure.match.Match.*
+import pl.natusiek.practice.api.structure.queue.Queue
 
 object QueueAPI {
 
     lateinit var queueRepository: QueueRepository
+
+    fun removeQueue(queue: Queue) = this.queueRepository.removeQueue(queue)
 
     fun getSizeQueueByRound(round: MatchRound, type: MatchType) = this.queueRepository.getSizeQueueByRound(round, type)
 

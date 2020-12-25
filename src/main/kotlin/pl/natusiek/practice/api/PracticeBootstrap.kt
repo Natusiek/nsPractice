@@ -1,12 +1,12 @@
 package pl.natusiek.practice.api
 
-import pl.natusiek.practice.api.repositories.KitRepository
-import pl.natusiek.practice.api.repositories.MemberRepository
-import pl.natusiek.practice.api.repositories.QueueRepository
+import pl.natusiek.practice.api.repositories.*
 
 interface PracticeBootstrap {
 
     val kitRepository: KitRepository
+    val matchRepository: MatchRepository
+    val arenaRepository: ArenaRepository
     val queueRepository: QueueRepository
     val memberRepository: MemberRepository
 

@@ -3,6 +3,7 @@ package pl.natusiek.practice.api.repositories
 import org.bukkit.entity.Player
 import pl.natusiek.practice.api.structure.match.Match.*
 import pl.natusiek.practice.api.structure.queue.Queue
+import java.util.*
 
 interface QueueRepository {
 
@@ -20,5 +21,9 @@ interface QueueRepository {
     fun getSizeQueueByKit(kit: String, type: MatchType): Int
 
     fun searchOrCreateQueue(kit: String, type: MatchType, size: MatchSize, round: MatchRound): Queue?
+
+    fun getQueueBy(block: (Queue) -> Boolean): Queue?
+
+    fun getQueueByMemberId(uniqueId: UUID): Queue?
 
 }

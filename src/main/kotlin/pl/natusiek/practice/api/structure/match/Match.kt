@@ -1,8 +1,28 @@
 package pl.natusiek.practice.api.structure.match
 
-interface Match {
+import org.bukkit.entity.Player
+import java.io.Serializable
+
+interface Match : Serializable {
+
+    val matchId: Int
+    val kit: String
+    val world: String
+    val teamBlue: MatchTeam
+    val teamRed: MatchTeam
+
+    val players: Sequence<Player>
+
+    val size: MatchSize
+    val round: MatchRound
+    val type: MatchType
+    val state: MatchState
+
+    val start: Int
+    val time: Long
 
 
+    enum class MatchState { START, FIGHT, END }
 
     enum class MatchType { RANKED, UNRANKED, PARTY }
 

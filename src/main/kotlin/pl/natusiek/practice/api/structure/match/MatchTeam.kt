@@ -1,21 +1,21 @@
-package pl.natusiek.practice.api.structure.queue
+package pl.natusiek.practice.api.structure.match
 
 import org.bukkit.entity.Player
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.HashSet
 
-interface QueueEntry : Serializable {
+interface MatchTeam : Serializable {
 
     val tag: String
     val leader: UUID
+    val team: TeamType
     val members: HashSet<UUID>
 
-    val time: Long
     val players: Sequence<Player>
 
+    val winRate: Int
 
-    fun sendActionbar(message: String)
-    fun sendTitle(title: String, subTitle: String)
+    enum class TeamType { BLUE, RED }
 
 }

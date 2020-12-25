@@ -1,11 +1,14 @@
 package pl.natusiek.practice.impl.repositories
 
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import pl.natusiek.module.common.extension.sendTitle
 import pl.natusiek.module.party.PartyAPI
 import pl.natusiek.module.party.structure.Party
 import pl.natusiek.module.party.structure.Party.*
 import pl.natusiek.practice.api.PracticeBootstrap
+import pl.natusiek.practice.api.event.queue.default.JoinQueueEvent
+import pl.natusiek.practice.api.event.queue.default.LeaveQueueEvent
 import pl.natusiek.practice.api.repositories.QueueRepository
 import pl.natusiek.practice.api.structure.match.Match.*
 import pl.natusiek.practice.api.structure.match.Match.MatchSize.*
@@ -16,7 +19,7 @@ import pl.natusiek.practice.impl.structure.queue.QueueImpl
 import java.util.*
 import kotlin.collections.HashSet
 
-class QueueRepositoryImpl(private val bootstrap: PracticeBootstrap) : QueueRepository {
+class QueueRepositoryImpl(private val bootstrap: PracticeBootstrap): QueueRepository {
 
     override val queues: MutableSet<Queue> = mutableSetOf()
     override var number: Int = 0
@@ -41,20 +44,24 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrap) : QueueRepos
                     } else {
                         members.addAll(party.members)
                     }
-                    party.state = PartyState.QUEUE
                     QueueEntryImpl(party.tag, player.uniqueId, members)
                 }
             }
-        entry.sendTitle("", "&aDołączyłeś do kolejki!")
         queue.entries.add(entry)
+        entry.sendTitle("", "&aDołączyłeś do kolejki!")
+        Bukkit.getPluginManager().callEvent(JoinQueueEvent(queue, entry.players))
     }
 
     override fun leaveFromQueue(player: Player) {
+        val queue = this.getQueueByMemberId(player.uniqueId)!!
+        val entry = queue.getEntryByMember(player.uniqueId)!!
 
+        queue.entries.remove(entry)
+        Bukkit.getPluginManager().callEvent(LeaveQueueEvent(queue, entry.players))
     }
 
     override fun removeQueue(queue: Queue) {
-
+        this.queues.remove(queue)
     }
 
     override fun getSizeQueueByRound(round: MatchRound, type: MatchType): Int {
@@ -75,8 +82,13 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrap) : QueueRepos
             .filter { it.size === size }
             .filter { it.round === round }
             .firstOrNull { it.isOpen }
-                ?: return QueueImpl(this.number++, kit, type, size, round)
+                ?: return QueueImpl(this.number++, kit, type, size, round).also { this.queues.add(it) }
 
        return queue
     }
+
+    override fun getQueueBy(block: (Queue) -> Boolean): Queue? = this.queues.find(block)
+
+    override fun getQueueByMemberId(uniqueId: UUID): Queue? = this.getQueueBy { it.getEntryByMember(uniqueId) != null }
+
 }

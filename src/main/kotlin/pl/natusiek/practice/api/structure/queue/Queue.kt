@@ -2,6 +2,7 @@ package pl.natusiek.practice.api.structure.queue
 
 import pl.natusiek.practice.api.structure.match.Match.*
 import java.io.Serializable
+import java.util.*
 
 interface Queue : Serializable {
 
@@ -15,5 +16,7 @@ interface Queue : Serializable {
     val isOpen: Boolean
 
     fun start()
+
+    fun getEntryByMember(uniqueId: UUID): QueueEntry?
 
 }

@@ -6,6 +6,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import pl.natusiek.practice.impl.PracticeBootstrapImpl
+import pl.natusiek.practice.impl.inventory.unranked.UnrankedSelectKitInventoryProvider
 import pl.natusiek.practice.impl.structure.MemberAPI
 
 class PlayerInteractListener(private val bootstrap: PracticeBootstrapImpl): Listener {
@@ -21,9 +22,8 @@ class PlayerInteractListener(private val bootstrap: PracticeBootstrapImpl): List
 
         val items = MemberAPI.items.mapNotNull { it.type }
         when (itemInHand.type) {
-            items[1] -> {
-
-            }
+            items[1] -> UnrankedSelectKitInventoryProvider.getInventory(this.bootstrap).open(player)
+            items[2] -> this.bootstrap.queueRepository.leaveFromQueue(player)
             else -> {
 
             }
