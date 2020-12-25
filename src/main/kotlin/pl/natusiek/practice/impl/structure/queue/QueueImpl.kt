@@ -50,7 +50,7 @@ data class QueueImpl(
     override fun getEntryByMember(uniqueId: UUID): QueueEntry? = this.entries.singleOrNull { it.members.firstOrNull { it == uniqueId } != null }
 
     class QueueTask(private val queue: Queue): BukkitRunnable() {
-
+        /// TODO: 25.12.2020 Wszystkie queue w jednyk tasku, a nie towrzenie millllioooon, tasków 
         init {
             this.runTaskTimer(PracticeAPI.plugin,20, 20)
         }

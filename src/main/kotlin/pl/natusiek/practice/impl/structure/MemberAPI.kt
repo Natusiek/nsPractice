@@ -29,11 +29,9 @@ object MemberAPI {
         this.findMemberById(player.uniqueId).apply { this.state = state }
         Bukkit.getScheduler().runTaskLater(PracticeAPI.plugin, {
             player.inventory.apply {
-                this.clear()
                 when (state) {
-                    ANY -> {
-                    }
                     LOBBY -> {
+                        this.clear()
                         val party = PartyAPI.findPartyByMemberId(player.uniqueId)
                         if (party != null) {
                             if (party.isLeader(player.uniqueId)) {
@@ -46,6 +44,7 @@ object MemberAPI {
                         }
                     }
                     QUEUE -> {
+                        this.clear()
                         val party = PartyAPI.findPartyByMemberId(player.uniqueId)
                         if (party != null) {
                             if (party.isLeader(player.uniqueId)) {
@@ -57,7 +56,7 @@ object MemberAPI {
                             this.setItem(4, this@MemberAPI.items[2])
                         }
                     }
-                    IN_GAME -> {
+                    else -> {
 
                     }
                 }

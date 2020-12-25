@@ -1,13 +1,16 @@
 package pl.natusiek.practice.api.structure.match
 
+import javafx.scene.media.SubtitleTrack
 import org.bukkit.entity.Player
+import pl.natusiek.module.common.extension.sendActionBar
+import pl.natusiek.module.common.extension.sendTitle
 import java.io.Serializable
 
 interface Match : Serializable {
 
     val matchId: Int
     val kit: String
-    val world: String
+    val arena: String
     val teamBlue: MatchTeam
     val teamRed: MatchTeam
 
@@ -16,13 +19,18 @@ interface Match : Serializable {
     val size: MatchSize
     val round: MatchRound
     val type: MatchType
-    val state: MatchState
+    var state: MatchState
 
-    val start: Int
+    var start: Int
     val time: Long
 
 
-    enum class MatchState { START, FIGHT, END }
+    fun sendActionbar(message: String) = this.players.forEach { it.sendActionBar(message) }
+
+    fun sendTitle(title: String, subTitle: String) = this.players.forEach { it.sendTitle(title, subTitle, 70) }
+
+
+    enum class MatchState { PREPARATION, STARTING, FIGHTING, ENDING }
 
     enum class MatchType { RANKED, UNRANKED, PARTY }
 

@@ -14,7 +14,7 @@ interface MatchTeam : Serializable {
 
     val players: Sequence<Player>
 
-    val winRate: Int
+    var winRate: Int
 
     enum class TeamType { BLUE, RED }
 
