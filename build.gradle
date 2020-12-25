@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.21'
+}
+
+group 'pl.natusiek'
+version '1.0'
+
+jar {
+    from {
+        configurations.compile.collect {it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+
+    maven { url = 'https://repo.aikar.co/content/groups/aikar/' }
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+}
+
+dependencies {
+    compile group: 'org.mongodb', name: 'mongodb-driver', version: '3.12.2'
+    compile group: 'co.aikar', name: 'acf-paper', version: '0.5.0-SNAPSHOT'
+
+    compile "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.21"
+
+    compileOnly 'fr.minuskube.inv:smart-invs:1.2.7'
+    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+}
