@@ -4,7 +4,7 @@ interface Match {
 
 
 
-    enum class MatchType { RANKED, UNRANKED }
+    enum class MatchType { RANKED, UNRANKED, PARTY }
 
     enum class MatchRound(val number: Int) { BO1(1), BO3(2), BO5(3) }
 

@@ -15,6 +15,10 @@ interface QueueRepository {
 
     fun removeQueue(queue: Queue)
 
+    fun getSizeQueueByRound(round: MatchRound, type: MatchType): Int
+
+    fun getSizeQueueByKit(kit: String, type: MatchType): Int
+
     fun searchOrCreateQueue(kit: String, type: MatchType, size: MatchSize, round: MatchRound): Queue?
 
 }

@@ -8,7 +8,7 @@ interface MemberProfile : Serializable {
     val name: String
     val uniqueId: UUID
 
-    val state: MemberState
+    var state: MemberState
 
 
     enum class MemberState { ANY, LOBBY, QUEUE, IN_GAME }

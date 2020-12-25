@@ -10,7 +10,6 @@ class ItemStructure(
     val material: Material,
     val amount: Int,
     val data: Short,
-    val lore: List<String>
 ) {
 
     constructor(item: ItemStack) : this(
@@ -18,9 +17,8 @@ class ItemStructure(
         item.type,
         item.amount,
         0,
-        if (item.hasItemMeta() && item.itemMeta.hasLore()) item.itemMeta.lore else arrayListOf()
     )
 
-    fun toItem(name: String): ItemStack = ItemBuilder(this.material, this.data).name(name).amount(this.amount).lore(this.lore).build()
+    fun toItem(lore: ArrayList<String>): ItemStack = ItemBuilder(this.material, this.data).name(this.name).amount(this.amount).lore(lore).build()
 
 }

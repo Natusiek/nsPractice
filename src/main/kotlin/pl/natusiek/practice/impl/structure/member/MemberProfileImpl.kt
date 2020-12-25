@@ -13,7 +13,6 @@ data class MemberProfileImpl(
     override val state: MemberState = MemberState.LOBBY
 
 
-
     override val id: String get() = this.uniqueId.toString()
     override val key: String get() = "uuid"
     override val collection: String get() = "members-profile"

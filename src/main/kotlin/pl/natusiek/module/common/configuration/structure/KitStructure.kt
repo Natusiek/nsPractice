@@ -5,7 +5,4 @@ data class KitStructure(
     val icon: ItemStructure,
     val armor: String,
     val contents: String
-) {
-
-
-}
+)

@@ -57,6 +57,14 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrap) : QueueRepos
 
     }
 
+    override fun getSizeQueueByRound(round: MatchRound, type: MatchType): Int {
+        return this.queues.asSequence().filter { it.type === type }.filter { it.round === round }.sumBy { it.entries.size }
+    }
+
+    override fun getSizeQueueByKit(kit: String, type: MatchType): Int {
+        return this.queues.asSequence().filter { it.type == type }.filter { it.kit == it.kit }.sumBy { it.entries.size }
+    }
+
     override fun searchOrCreateQueue(kit: String, type: MatchType, size: MatchSize, round: MatchRound): Queue? {
         if (this.queues.size > 20) return null
 
