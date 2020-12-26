@@ -2,6 +2,7 @@ package pl.natusiek.practice.impl.repositories
 
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
+import pl.natusiek.module.common.builder.ItemBuilder
 import pl.natusiek.module.common.configuration.ConfigurationService
 import pl.natusiek.module.common.configuration.structure.KitStructure
 import pl.natusiek.module.common.helper.serializer.InventorySerializer
@@ -42,7 +43,6 @@ class KitRepositoryImpl(private val bootstrap: PracticeBootstrapImpl) : KitRepos
         this.kits.remove(kit)
         ConfigurationService.removeFile(File(this.folder, kit.name))
     }
-
 
     override fun getKitBy(block: (Kit) -> Boolean): Kit? = this.kits.find(block)
 

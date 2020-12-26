@@ -1,7 +1,11 @@
 package pl.natusiek.practice.impl.listener
 
+import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import pl.natusiek.module.common.builder.LocationBuilder
+import pl.natusiek.module.common.extension.sendMessages
+import pl.natusiek.practice.api.event.match.default.EndMatchEvent
 import pl.natusiek.practice.api.event.match.default.StartMatchEvent
 import pl.natusiek.practice.api.structure.match.MatchTeam
 import pl.natusiek.practice.api.structure.match.MatchTeam.*
@@ -26,6 +30,25 @@ class MatchListener(private val bootstrap: PracticeBootstrapImpl) : Listener {
             MemberAPI.assignItem(it, MemberState.IN_GAME)
             kit.fillInventoryByKit(it)
         }
+    }
+
+    @EventHandler
+    fun onEnd(event: EndMatchEvent) {
+        val match = event.match
+        val team = event.team
+        val spawn = LocationBuilder("world", 0.0, 65.0, 0.0).toBukkitLocation()
+        match.players.forEach {
+            it.sendMessages(
+                "",
+                " &8* &fWygrał: &a${team.tag}",
+                " ",
+                "",
+                ""
+            )
+            it.teleport(spawn)
+            it.gameMode = GameMode.ADVENTURE
+        }
+        this.bootstrap.matchRepository.removeMatch(match)
     }
 
 }

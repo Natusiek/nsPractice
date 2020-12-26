@@ -4,6 +4,7 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import pl.natusiek.module.common.extension.sendMessages
 import java.util.*
+import kotlin.collections.HashSet
 
 data class Party(
     val tag: String,
@@ -11,6 +12,7 @@ data class Party(
 ) {
 
     val members: MutableSet<UUID> = mutableSetOf()
+    val invites: MutableMap<UUID, Long> = mutableMapOf()
 
     val players: Sequence<Player>
         get() = this.members.asSequence().mapNotNull { Bukkit.getPlayer(it) }

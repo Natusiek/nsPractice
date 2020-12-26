@@ -17,6 +17,6 @@ data class MatchTeamImpl(
     override val players: Sequence<Player>
         get() = this.members.asSequence().mapNotNull { Bukkit.getPlayer(it) }
 
-    override val winRate: Int = 0
+    override var winRate: Int = 0
 
 }

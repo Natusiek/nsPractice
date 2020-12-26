@@ -24,10 +24,6 @@ data class QueueImpl(
 
     override val entries: MutableSet<QueueEntry> = mutableSetOf()
 
-    init {
-        QueueTask(this)
-    }
-
     override val isOpen: Boolean
         get() = this.entries.sumBy { it.members.size } < this.size.number
 
@@ -48,25 +44,5 @@ data class QueueImpl(
     }
 
     override fun getEntryByMember(uniqueId: UUID): QueueEntry? = this.entries.singleOrNull { it.members.firstOrNull { it == uniqueId } != null }
-
-    class QueueTask(private val queue: Queue): BukkitRunnable() {
-        /// TODO: 25.12.2020 Wszystkie queue w jednyk tasku, a nie towrzenie millllioooon, tasków 
-        init {
-            this.runTaskTimer(PracticeAPI.plugin,20, 20)
-        }
-
-        override fun run() {
-            if (this.queue.isOpen) {
-                this.queue.start()
-                return this.cancel()
-            }
-            this.queue.entries.forEach {
-                val time = DataHelper.parseLong(it.time - System.currentTimeMillis(), false)
-                it.sendActionbar("&8|| &fCzekasz juz: $time &8||")
-                it.sendTitle("", "&aSzukanie przeciwników...")
-            }
-        }
-
-    }
 
 }

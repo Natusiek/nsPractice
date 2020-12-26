@@ -25,6 +25,11 @@ interface Match : Serializable {
     val time: Long
 
 
+    fun winningRound(team: MatchTeam)
+       
+    fun winningMatch(team: MatchTeam)
+
+
     fun sendActionbar(message: String) = this.players.forEach { it.sendActionBar(message) }
 
     fun sendTitle(title: String, subTitle: String) = this.players.forEach { it.sendTitle(title, subTitle, 70) }
