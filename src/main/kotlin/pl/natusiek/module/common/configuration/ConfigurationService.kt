@@ -38,12 +38,8 @@ object ConfigurationService {
         Files.write(file.toPath(), json.toByteArray(Charsets.UTF_8))
     }
 
-    fun createJson(file: File, string: String) {
-        Files.write(file.toPath(), string.toByteArray(Charsets.UTF_8))
-    }
+    fun createJson(file: File, string: String) { Files.write(file.toPath(), string.toByteArray(Charsets.UTF_8)) }
 
-    fun removeFile(file: File) {
-        Files.delete(file.toPath())
-    }
+    fun removeFile(file: File) { Files.delete(file.toPath()) }
 
 }

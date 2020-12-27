@@ -9,7 +9,7 @@ import pl.natusiek.module.party.repositories.PartyRepository
 import pl.natusiek.module.party.task.InviteRefreshTask
 import pl.natusiek.practice.impl.PracticePlugin
 
-class PartyModule(val plugin: PracticePlugin) : Module {
+class PartyModule(val plugin: PracticePlugin): Module {
 
     lateinit var partyFactory: PartyFactory
     lateinit var partyRepository: PartyRepository
@@ -30,10 +30,12 @@ class PartyModule(val plugin: PracticePlugin) : Module {
             RemovePartyCommand(this),
             PartyCommand(this)
         )
+
         this.plugin.registerListeners(
             PartyChatListener(this)
         )
-        PartyAPI.partyRepository = this.partyRepository
+
+        PartyAPI.module = this
     }
 
     override fun onStop() {

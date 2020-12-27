@@ -22,7 +22,8 @@ object MemberAPI {
         this.items.plus(arrayOf(
             ItemBuilder(Material.IRON_SWORD).name("&aDołącz do kolejki &8(Nierankingowe)").build(), // 1
             ItemBuilder(Material.FENCE_GATE).name("&4Opuść kolejkę").build(), // 2
-            ItemBuilder(Material.BARRIER).name("&cOpuść party").build() //3
+            ItemBuilder(Material.BARRIER).name("&cOpuść party").build(), // 3
+            ItemBuilder(Material.GOLD_SWORD).name("&aDołącz do kolejki &8(Party)").build() // 4
         ))
     }
     fun assignItem(player: Player, state: MemberState) {
@@ -35,7 +36,7 @@ object MemberAPI {
                         val party = PartyAPI.findPartyByMemberId(player.uniqueId)
                         if (party != null) {
                             if (party.isLeader(player.uniqueId)) {
-
+                                this.setItem(0, this@MemberAPI.items[4])
                             } else {
                                 this.setItem(0, this@MemberAPI.items[3])
                             }
@@ -62,7 +63,7 @@ object MemberAPI {
                 }
             }
             player.updateInventory()
-        }, 5)
+        }, 3)
     }
 
     fun findMemberById(uniqueId: UUID) = this.memberRepository.getMemberById(uniqueId)!!

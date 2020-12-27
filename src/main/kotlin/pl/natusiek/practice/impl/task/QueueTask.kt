@@ -1,4 +1,4 @@
-package pl.natusiek.practice.task
+package pl.natusiek.practice.impl.task
 
 import org.bukkit.scheduler.BukkitRunnable
 import pl.natusiek.module.common.helper.DataHelper
@@ -12,10 +12,9 @@ class QueueTask(private val bootstrap: PracticeBootstrap): BukkitRunnable() {
 
     override fun run() {
         this.bootstrap.queueRepository.queues.forEach {
-            if (it.isOpen) {
-                it.start()
-                return this.cancel()
-            }
+            if (it.isOpen)
+                return it.start()
+
             it.entries.forEach { entry ->
                 entry.sendActionbar("&8|| &fCzekasz juz: ${DataHelper.parseLong(entry.time - System.currentTimeMillis(), false)} &8||")
                 entry.sendTitle("", "&aSzukanie przeciwników...")

@@ -9,7 +9,7 @@ import pl.natusiek.module.database.system.Database
 import pl.natusiek.module.database.configuration.DatabaseConfiguration
 import pl.natusiek.practice.impl.PracticePlugin
 
-class DatabaseModule(private val plugin: PracticePlugin) : Module {
+class DatabaseModule(private val plugin: PracticePlugin): Module {
 
     lateinit var database: Database
     lateinit var databaseConfiguration: DatabaseConfiguration

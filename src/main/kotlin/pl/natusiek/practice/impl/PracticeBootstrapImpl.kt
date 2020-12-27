@@ -1,11 +1,14 @@
 package pl.natusiek.practice.impl
 
-import pl.natusiek.module.common.configuration.Configuration
-import pl.natusiek.module.common.configuration.ConfigurationService
-import pl.natusiek.module.common.plugin.Plugin
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.repositories.*
-import pl.natusiek.practice.impl.configuration.ArenaConfiguration
+import pl.natusiek.practice.impl.command.kit.CreateKitCommand
+import pl.natusiek.practice.impl.command.kit.KitCommand
+import pl.natusiek.practice.impl.command.kit.RemoveKitCommand
+import pl.natusiek.practice.impl.command.kit.ShowKitCommand
+import pl.natusiek.practice.impl.listener.MatchListener
+import pl.natusiek.practice.impl.listener.PlayerInteractListener
+import pl.natusiek.practice.impl.listener.QueueListener
 import pl.natusiek.practice.impl.repositories.*
 import pl.natusiek.practice.impl.structure.KitAPI
 import pl.natusiek.practice.impl.structure.MatchAPI
@@ -28,6 +31,9 @@ class PracticeBootstrapImpl(override val plugin: PracticePlugin): PracticeBootst
         this.queueRepository = QueueRepositoryImpl(this)
         this.memberRepository = MemberRepositoryImpl(this)
 
+        this.registerCommands()
+        this.registerListeners()
+
         KitAPI.kitRepository = this.kitRepository
         MatchAPI.matchRepository = this.matchRepository
         QueueAPI.queueRepository = this.queueRepository
@@ -38,6 +44,24 @@ class PracticeBootstrapImpl(override val plugin: PracticePlugin): PracticeBootst
         this.memberRepository.members.forEach {
             if (it is MemberProfileImpl) it.updateEntity()
         }
+    }
+
+
+    override fun registerCommands() {
+        this.plugin.registerCommands(
+            KitCommand(this),
+            ShowKitCommand(this),
+            CreateKitCommand(this),
+            RemoveKitCommand(this)
+        )
+    }
+
+    override fun registerListeners() {
+        this.plugin.registerListeners(
+            MatchListener(this),
+            QueueListener(this),
+            PlayerInteractListener(this)
+        )
     }
 
 }

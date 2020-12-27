@@ -12,8 +12,9 @@ import java.util.concurrent.TimeUnit
 class PartyFactory(private val module: PartyModule) {
 
     fun createParty(party: Party, sender: Player) {
-        party.members.add(PartyMember(sender.name, sender.uniqueId))
         this.module.partyRepository.createParty(party)
+        party.members.add(PartyMember(sender.name, sender.uniqueId))
+        MemberAPI.assignItem(sender, MemberState.LOBBY)
         sender.sendMessages(" &8* &fUtworzyles party o tagu: &e${party.tag}")
     }
 

@@ -7,6 +7,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutTitle
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import pl.natusiek.module.common.helper.ItemHelper
 
 fun Player.sendMessages(vararg message: String) {
     message.forEach { this.sendMessage(it.colored()) }
@@ -22,7 +23,7 @@ fun Player.sendActionBar(text: String) {
     this.sendPacket(packet)
 }
 
-fun Player.hasItem(item: ItemStack) = this.inventory.singleOrNull { it.isSimilar(item) } != null
+fun Player.hasItem(item: ItemStack) = this.inventory.singleOrNull { item.isSimilar(it) } != null
 
 fun Player.sendTitle(title: String, subTitle: String, stay: Int) {
     val timePacket = PacketPlayOutTitle(0, stay, 0)

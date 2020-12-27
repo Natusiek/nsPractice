@@ -1,4 +1,4 @@
-package pl.natusiek.practice.task
+package pl.natusiek.practice.impl.task
 
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -7,6 +7,7 @@ import pl.natusiek.module.common.helper.DataHelper
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.event.match.default.StartMatchEvent
 import pl.natusiek.practice.api.structure.match.Match
+import pl.natusiek.practice.api.structure.match.Match.MatchState
 import pl.natusiek.practice.impl.structure.ArenaAPI
 
 
@@ -19,17 +20,15 @@ class MatchTask(private val bootstrap: PracticeBootstrap): BukkitRunnable() {
     override fun run() {
         this.bootstrap.matchRepository.matches.forEach { match ->
             when (match.state) {
-                Match.MatchState.PREPARATION -> {
-                    Bukkit.getPluginManager().callEvent(StartMatchEvent(match, ArenaAPI.findArenaByName(match.arena)!!))
-                }
-                Match.MatchState.STARTING -> {
+                MatchState.PREPARATION -> Bukkit.getPluginManager().callEvent(StartMatchEvent(match, ArenaAPI.findArenaByName(match.arena)!!))
+                MatchState.STARTING -> {
                     if (--match.start > 0)
                         return match.sendTitle("", "&eMecz startuje za: &f${match.start}")
 
                     match.sendTitle("", "&aGo go go!")
-                    match.state = Match.MatchState.FIGHTING
+                    match.state = MatchState.FIGHTING
                 }
-                Match.MatchState.FIGHTING -> {
+                MatchState.FIGHTING -> {
                     match.teamBlue.takeIf { it.players.none { it.gameMode === GameMode.ADVENTURE } }
                         ?.apply { match.winningMatch(match.teamRed) }
 
@@ -42,7 +41,9 @@ class MatchTask(private val bootstrap: PracticeBootstrap): BukkitRunnable() {
                         } &8&l| &7[&f${match.teamRed.winRate}&7] &f${match.teamRed.winRate}"
                     )
                 }
-                Match.MatchState.ENDING -> TODO()
+                MatchState.ENDING -> {
+
+                }
             }
         }
     }

@@ -13,9 +13,7 @@ class QueueListener(private val bootstrap: PracticeBootstrap): Listener {
 
     @EventHandler
     fun onJoin(event: JoinQueueEvent) {
-        event.players.forEach {
-            MemberAPI.assignItem(it, MemberState.QUEUE)
-        }
+        event.players.forEach { MemberAPI.assignItem(it, MemberState.QUEUE) }
     }
 
     @EventHandler

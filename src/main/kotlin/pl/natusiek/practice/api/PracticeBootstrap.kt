@@ -18,4 +18,9 @@ interface PracticeBootstrap {
 
     fun onStop()
 
+
+    fun registerCommands()
+
+    fun registerListeners()
+
 }

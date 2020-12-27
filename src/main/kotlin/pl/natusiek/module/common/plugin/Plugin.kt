@@ -26,7 +26,6 @@ abstract class Plugin : JavaPlugin() {
     }
 
     fun <T> registerCommands(vararg commands: T) where T : BaseCommand {
-        this.initCommand()
         val manager = this.commandManager
         commands.forEach { manager.registerCommand(it) }
     }

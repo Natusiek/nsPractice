@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
+import pl.natusiek.module.party.PartyAPI
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.impl.inventory.unranked.UnrankedSelectKitInventoryProvider
 import pl.natusiek.practice.impl.structure.MemberAPI
@@ -23,6 +24,10 @@ class PlayerInteractListener(private val bootstrap: PracticeBootstrap): Listener
         when (itemInHand.type) {
             items[1] -> UnrankedSelectKitInventoryProvider.getInventory(this.bootstrap).open(player)
             items[2] -> this.bootstrap.queueRepository.leaveFromQueue(player)
+            items[3] -> {
+                this.bootstrap.queueRepository.leaveFromQueue(player)
+                PartyAPI.leaveFromParty(player)
+            }
             else -> {
 
             }
