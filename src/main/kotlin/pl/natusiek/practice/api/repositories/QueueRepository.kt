@@ -10,6 +10,7 @@ interface QueueRepository {
     val queues: MutableSet<Queue>
     val number: Int
 
+
     fun joinToQueue(player: Player, kit: String, type: MatchType, size: MatchSize, round: MatchRound)
 
     fun leaveFromQueue(player: Player)

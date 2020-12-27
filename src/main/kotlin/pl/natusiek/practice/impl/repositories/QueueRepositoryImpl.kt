@@ -2,12 +2,10 @@ package pl.natusiek.practice.impl.repositories
 
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import org.bukkit.scheduler.BukkitRunnable
 import pl.natusiek.module.common.extension.sendTitle
-import pl.natusiek.module.common.helper.DataHelper
 import pl.natusiek.module.party.PartyAPI
-import pl.natusiek.module.party.structure.Party
 import pl.natusiek.module.party.structure.Party.*
+import pl.natusiek.practice.api.PracticeBootstrap
 
 import pl.natusiek.practice.api.event.queue.default.JoinQueueEvent
 import pl.natusiek.practice.api.event.queue.default.LeaveQueueEvent
@@ -16,19 +14,15 @@ import pl.natusiek.practice.api.structure.match.Match.*
 import pl.natusiek.practice.api.structure.match.Match.MatchSize.*
 import pl.natusiek.practice.api.structure.queue.Queue
 import pl.natusiek.practice.api.structure.queue.QueueEntry
-import pl.natusiek.practice.impl.PracticeBootstrapImpl
 import pl.natusiek.practice.impl.structure.queue.QueueEntryImpl
 import pl.natusiek.practice.impl.structure.queue.QueueImpl
 import java.util.*
 
-class QueueRepositoryImpl(private val bootstrap: PracticeBootstrapImpl): QueueRepository {
+class QueueRepositoryImpl(private val bootstrap: PracticeBootstrap): QueueRepository {
 
     override val queues: MutableSet<Queue> = mutableSetOf()
     override var number: Int = 0
 
-    init {
-        QueueTask(this.bootstrap)
-    }
 
     override fun joinToQueue(player: Player, kit: String, type: MatchType, size: MatchSize, round: MatchRound) {
         val queue = this.searchOrCreateQueue(kit, type, size, round)
@@ -42,7 +36,7 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrapImpl): QueueRe
                         ?: return player.sendTitle("", "&cNie posiadasz party!", 60)
 
                     val members = hashSetOf<UUID>()
-                    if (party.members.size > size.number) {
+                    if (party.players.count() > size.number) {
                         val players = party.members.toList()
                         for (i in 0..size.number) {
                             members.add(players[i].uniqueId)
@@ -67,9 +61,7 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrapImpl): QueueRe
         Bukkit.getPluginManager().callEvent(LeaveQueueEvent(queue, entry.players))
     }
 
-    override fun removeQueue(queue: Queue) {
-        this.queues.remove(queue)
-    }
+    override fun removeQueue(queue: Queue) { this.queues.remove(queue) }
 
     override fun getSizeQueueByRound(round: MatchRound, type: MatchType): Int {
         return this.queues.asSequence().filter { it.type === type }.filter { it.round === round }.sumBy { it.entries.size }
@@ -97,26 +89,5 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrapImpl): QueueRe
     override fun getQueueBy(block: (Queue) -> Boolean): Queue? = this.queues.find(block)
 
     override fun getQueueByMemberId(uniqueId: UUID): Queue? = this.getQueueBy { it.getEntryByMember(uniqueId) != null }
-
-    class QueueTask(private val bootstrap: PracticeBootstrapImpl): BukkitRunnable() {
-
-        init {
-            this.runTaskTimer(this.bootstrap.plugin,20, 20)
-        }
-
-        override fun run() {
-            this.bootstrap.queueRepository.queues.forEach {
-                if (it.isOpen) {
-                    it.start()
-                    return this.cancel()
-                }
-                it.entries.forEach { entry ->
-                    entry.sendActionbar("&8|| &fCzekasz juz: ${DataHelper.parseLong(entry.time - System.currentTimeMillis(), false)} &8||")
-                    entry.sendTitle("", "&aSzukanie przeciwników...")
-                }
-            }
-        }
-
-    }
 
 }

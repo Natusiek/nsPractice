@@ -3,13 +3,13 @@ package pl.natusiek.practice.impl.listener
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import pl.natusiek.module.common.extension.sendTitle
+import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.event.queue.default.JoinQueueEvent
 import pl.natusiek.practice.api.event.queue.default.LeaveQueueEvent
 import pl.natusiek.practice.api.structure.member.MemberProfile.MemberState
-import pl.natusiek.practice.impl.PracticeBootstrapImpl
 import pl.natusiek.practice.impl.structure.MemberAPI
 
-class QueueListener(private val bootstrap: PracticeBootstrapImpl): Listener {
+class QueueListener(private val bootstrap: PracticeBootstrap): Listener {
 
     @EventHandler
     fun onJoin(event: JoinQueueEvent) {

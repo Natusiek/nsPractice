@@ -5,12 +5,11 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
-import pl.natusiek.practice.impl.PracticeBootstrapImpl
+import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.impl.inventory.unranked.UnrankedSelectKitInventoryProvider
 import pl.natusiek.practice.impl.structure.MemberAPI
 
-class PlayerInteractListener(private val bootstrap: PracticeBootstrapImpl): Listener {
-
+class PlayerInteractListener(private val bootstrap: PracticeBootstrap): Listener {
 
     @EventHandler
     fun onInteract(event: PlayerInteractEvent) {

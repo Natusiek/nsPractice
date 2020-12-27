@@ -1,8 +1,11 @@
 package pl.natusiek.practice.api
 
 import pl.natusiek.practice.api.repositories.*
+import pl.natusiek.practice.impl.PracticePlugin
 
 interface PracticeBootstrap {
+
+    val plugin: PracticePlugin
 
     val kitRepository: KitRepository
     val matchRepository: MatchRepository

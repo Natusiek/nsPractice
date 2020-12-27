@@ -1,7 +1,11 @@
 package pl.natusiek.practice.impl
 
+import pl.natusiek.module.common.configuration.Configuration
+import pl.natusiek.module.common.configuration.ConfigurationService
+import pl.natusiek.module.common.plugin.Plugin
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.repositories.*
+import pl.natusiek.practice.impl.configuration.ArenaConfiguration
 import pl.natusiek.practice.impl.repositories.*
 import pl.natusiek.practice.impl.structure.KitAPI
 import pl.natusiek.practice.impl.structure.MatchAPI
@@ -9,7 +13,7 @@ import pl.natusiek.practice.impl.structure.MemberAPI
 import pl.natusiek.practice.impl.structure.QueueAPI
 import pl.natusiek.practice.impl.structure.member.MemberProfileImpl
 
-class PracticeBootstrapImpl(val plugin: PracticePlugin) : PracticeBootstrap {
+class PracticeBootstrapImpl(override val plugin: PracticePlugin): PracticeBootstrap {
 
     override lateinit var kitRepository: KitRepository
     override lateinit var matchRepository: MatchRepository
@@ -32,8 +36,7 @@ class PracticeBootstrapImpl(val plugin: PracticePlugin) : PracticeBootstrap {
 
     override fun onStop() {
         this.memberRepository.members.forEach {
-            if (it is MemberProfileImpl)
-                it.updateEntity()
+            if (it is MemberProfileImpl) it.updateEntity()
         }
     }
 

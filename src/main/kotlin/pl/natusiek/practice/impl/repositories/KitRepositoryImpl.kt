@@ -1,11 +1,11 @@
 package pl.natusiek.practice.impl.repositories
 
 import org.bukkit.Material
-import org.bukkit.inventory.ItemStack
-import pl.natusiek.module.common.builder.ItemBuilder
+
 import pl.natusiek.module.common.configuration.ConfigurationService
 import pl.natusiek.module.common.configuration.structure.KitStructure
 import pl.natusiek.module.common.helper.serializer.InventorySerializer
+import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.repositories.KitRepository
 import pl.natusiek.practice.api.structure.kit.Kit
 import pl.natusiek.practice.impl.PracticeBootstrapImpl
@@ -13,7 +13,7 @@ import pl.natusiek.practice.impl.structure.kit.KitEquipmentImpl
 import pl.natusiek.practice.impl.structure.kit.KitImpl
 import java.io.File
 
-class KitRepositoryImpl(private val bootstrap: PracticeBootstrapImpl) : KitRepository {
+class KitRepositoryImpl(private val bootstrap: PracticeBootstrap) : KitRepository {
 
     override val kits: MutableSet<Kit> = mutableSetOf()
     override val folder: File = File(this.bootstrap.plugin.dataFolder, "kits")

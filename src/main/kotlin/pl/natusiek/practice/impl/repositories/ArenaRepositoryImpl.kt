@@ -5,12 +5,12 @@ import org.bukkit.Difficulty
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.WorldType
+import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.repositories.ArenaRepository
 import pl.natusiek.practice.api.structure.arena.ArenaProfile
-import pl.natusiek.practice.impl.PracticeBootstrapImpl
 import java.io.File
 
-class ArenaRepositoryImpl(private val bootstrap: PracticeBootstrapImpl) : ArenaRepository {
+class ArenaRepositoryImpl(private val bootstrap: PracticeBootstrap) : ArenaRepository {
 
     override val arenas: HashSet<ArenaProfile> = hashSetOf()
     override val folder: File = File(this.bootstrap.plugin.dataFolder, "arenas")

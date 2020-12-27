@@ -8,14 +8,15 @@ import org.bukkit.entity.Player
 import pl.natusiek.module.common.builder.HeadBuilder
 import pl.natusiek.module.common.extension.colored
 import pl.natusiek.module.common.extension.fillBorder
+import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.structure.match.Match.*
 import pl.natusiek.practice.impl.PracticeBootstrapImpl
 import pl.natusiek.practice.impl.structure.QueueAPI
 
-class UnrankedSelectRoundInventoryProvider(private val bootstrap: PracticeBootstrapImpl, val kit: String) : InventoryProvider {
+class UnrankedSelectRoundInventoryProvider(private val bootstrap: PracticeBootstrap, val kit: String) : InventoryProvider {
 
     companion object {
-        fun getInventory(bootstrap: PracticeBootstrapImpl, kit: String): SmartInventory =
+        fun getInventory(bootstrap: PracticeBootstrap, kit: String): SmartInventory =
             SmartInventory.builder()
                 .id("UnrankedSelectRound")
                 .provider(UnrankedSelectRoundInventoryProvider(bootstrap, kit))

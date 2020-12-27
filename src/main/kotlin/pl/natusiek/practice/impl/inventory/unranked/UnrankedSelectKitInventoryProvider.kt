@@ -7,15 +7,14 @@ import fr.minuskube.inv.content.InventoryProvider
 import org.bukkit.entity.Player
 import pl.natusiek.module.common.extension.colored
 import pl.natusiek.module.common.extension.fillBorder
-import pl.natusiek.practice.api.structure.match.Match
+import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.structure.match.Match.MatchType
-import pl.natusiek.practice.impl.PracticeBootstrapImpl
 import pl.natusiek.practice.impl.structure.QueueAPI
 
-class UnrankedSelectKitInventoryProvider(private val bootstrap: PracticeBootstrapImpl) : InventoryProvider {
+class UnrankedSelectKitInventoryProvider(private val bootstrap: PracticeBootstrap) : InventoryProvider {
 
     companion object {
-        fun getInventory(bootstrap: PracticeBootstrapImpl): SmartInventory =
+        fun getInventory(bootstrap: PracticeBootstrap): SmartInventory =
             SmartInventory.builder()
                 .id("UnrankedSelectKit")
                 .provider(UnrankedSelectKitInventoryProvider(bootstrap))
