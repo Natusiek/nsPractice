@@ -10,26 +10,27 @@ import pl.natusiek.module.party.PartyModule
 import pl.natusiek.practice.api.structure.member.MemberProfile
 import pl.natusiek.practice.impl.structure.MemberAPI
 
-@CommandAlias("party|team|p|t")
-class JoinPartyCommand(private val module: PartyModule): BaseCommand() {
 
-    @Subcommand("join|dolacz")
+@CommandAlias("party|team|p|t")
+class LeavePartyCommand(private val module: PartyModule): BaseCommand() {
+
+    @Subcommand("opusc|leave")
     @Syntax("(tag)")
-    fun onJoin(sender: Player, tag: String) {
+    fun onLeave(sender: Player, tag: String) {
         MemberAPI.findMemberById(sender.uniqueId).also {
             if (it.state != MemberProfile.MemberState.LOBBY)
                 return sender.sendMessages("&4ups! &fParty mozesz usunąć tylko w lobby!")
         }
-        if (this.module.partyRepository.getPartyByMemberId(sender.uniqueId) != null)
-            return sender.sendMessages("&4ups! &fPosiadasz juz party")
+        val party = this.module.partyRepository.getPartyByMemberId(sender.uniqueId)
+            ?: return sender.sendMessages("&4ups! &fNie posiadasz party!")
 
-        val party = this.module.partyRepository.getPartyByTag(tag)
-            ?: return sender.sendMessages("&4ups! &fNie ma takiego party")
+        if (party.tag != tag)
+            return sender.sendMessages("&4ups! &fPodales zły tag party")
 
-        if (sender.uniqueId !in party.invites)
-            return sender.sendMessages("&4ups! &fNie masz zaproszenia do party")
+        if (party.isLeader(sender.uniqueId))
+            return sender.sendMessages("&4ups! &fJestes liderem więc nie możesz opuścić.")
 
-        this.module.partyFactory.joinMember(party, sender)
+        this.module.partyFactory.leaveMember(party, sender)
     }
 
 }

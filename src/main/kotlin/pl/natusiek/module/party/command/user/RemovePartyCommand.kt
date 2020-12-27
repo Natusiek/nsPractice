@@ -22,7 +22,7 @@ class RemovePartyCommand(private val module: PartyModule): BaseCommand() {
         .build<UUID, Long>()
 
     @Subcommand("usun|remove|delete")
-    @Syntax("<tag>")
+    @Syntax("(tag)")
     fun onRemove(sender: Player, tag: String) {
         MemberAPI.findMemberById(sender.uniqueId).also {
             if (it.state != MemberProfile.MemberState.LOBBY)
@@ -32,7 +32,7 @@ class RemovePartyCommand(private val module: PartyModule): BaseCommand() {
             ?: return sender.sendMessages("&4ups! &fNie posiadasz party!")
 
         if (party.tag != tag)
-            return sender.sendMessages("&4ups! &fPodany tag nie jest taki sam jak party!")
+            return sender.sendMessages("&4ups! &fPodales zly tag party!")
 
         if (!party.isLeader(sender.uniqueId))
             return sender.sendMessages("&4ups! &fNie jestes liderem!")

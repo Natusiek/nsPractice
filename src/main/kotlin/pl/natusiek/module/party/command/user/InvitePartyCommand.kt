@@ -10,7 +10,7 @@ import pl.natusiek.module.party.PartyModule
 class InvitePartyCommand(private val module: PartyModule): BaseCommand() {
 
     @Subcommand("zapros|invite")
-    @Syntax("<nick>")
+    @Syntax("(nick)")
     @CommandCompletion("@players")
     fun onCommand(sender: Player, @Optional @Flags("other") other: Player?) {
         val party = this.module.partyRepository.getPartyByMemberId(sender.uniqueId)

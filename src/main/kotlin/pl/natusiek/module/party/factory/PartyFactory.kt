@@ -4,6 +4,7 @@ import org.bukkit.entity.Player
 import pl.natusiek.module.common.extension.sendMessages
 import pl.natusiek.module.party.PartyModule
 import pl.natusiek.module.party.structure.Party
+import pl.natusiek.module.party.structure.PartyMember
 import pl.natusiek.practice.api.structure.member.MemberProfile.*
 import pl.natusiek.practice.impl.structure.MemberAPI
 import java.util.concurrent.TimeUnit
@@ -11,7 +12,7 @@ import java.util.concurrent.TimeUnit
 class PartyFactory(private val module: PartyModule) {
 
     fun createParty(party: Party, sender: Player) {
-        party.members.add(party.leader)
+        party.members.add(PartyMember(sender.name, sender.uniqueId))
         this.module.partyRepository.createParty(party)
         sender.sendMessages(" &8* &fUtworzyles party o tagu: &e${party.tag}")
     }
@@ -31,12 +32,27 @@ class PartyFactory(private val module: PartyModule) {
     }
 
     fun joinMember(party: Party, target: Player) {
-        party.members.add(target.uniqueId)
+        party.members.add(PartyMember(target.name, target.uniqueId))
         party.invites.remove(target.uniqueId)
         party.players.forEach {
             it.sendMessages(" &8* &fDo twojego party dolaczył &e${target.uniqueId}")
         }
         target.sendMessages(" &8* &fDolaczyl do party &e${party.tag}")
+    }
+
+    fun leaveMember(party: Party, target: Player) {
+        party.members.remove(party.hasMember(target.uniqueId)!!)
+        party.players.forEach {
+            it.sendMessages(" &8* &e${target.name} &fopuscil twoje party!")
+        }
+        MemberAPI.assignItem(target, MemberState.LOBBY)
+    }
+
+    fun kickMember(party: Party, member: PartyMember) {
+        party.members.remove(member)
+        party.players.forEach {
+            it.sendMessages(" &8* &e${member.name} &fzostal wyrzucony z twojego party!")
+        }
     }
 
 }

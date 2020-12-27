@@ -16,7 +16,7 @@ import pl.natusiek.practice.impl.structure.MemberAPI
 class CreatePartyCommand(private val module: PartyModule): BaseCommand() {
 
     @Subcommand("zaloz|create")
-    @Syntax("<tag>")
+    @Syntax("(tag)")
     fun onCommand(sender: Player, tag: String) {
         MemberAPI.findMemberById(sender.uniqueId).also {
             if (it.state != MemberState.LOBBY)

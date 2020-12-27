@@ -45,10 +45,10 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrapImpl): QueueRe
                     if (party.members.size > size.number) {
                         val players = party.members.toList()
                         for (i in 0..size.number) {
-                            members.add(players[i])
+                            members.add(players[i].uniqueId)
                         }
                     } else {
-                        members.addAll(party.members)
+                        members.addAll(party.members.map { it.uniqueId })
                     }
                     party.state = PartyState.QUEUE
                     QueueEntryImpl(party.tag, player.uniqueId, members)

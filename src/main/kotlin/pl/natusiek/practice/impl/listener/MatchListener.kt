@@ -41,8 +41,7 @@ class MatchListener(private val bootstrap: PracticeBootstrapImpl) : Listener {
             it.sendMessages(
                 "",
                 " &8* &fWygrał: &a${team.tag}",
-                " ",
-                "",
+                "   &* &fOsoby: &a${team.players.joinToString { "&a${it.name}" }}",
                 ""
             )
             it.teleport(spawn)
