@@ -14,4 +14,6 @@ object QueueAPI {
 
     fun getSizeQueueByKit(kit: String, type: MatchType) = this.queueRepository.getSizeQueueByKit(kit, type)
 
+    fun getSizeQueueBySize(size: MatchSize, type: MatchType) = this.queueRepository.getSizeQueueBySize(size, type)
+
 }

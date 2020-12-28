@@ -1,4 +1,4 @@
-package pl.natusiek.practice.impl.inventory.unranked
+package pl.natusiek.practice.impl.inventory.queue.unranked
 
 import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
@@ -10,7 +10,6 @@ import pl.natusiek.module.common.extension.colored
 import pl.natusiek.module.common.extension.fillBorder
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.structure.match.Match.*
-import pl.natusiek.practice.impl.PracticeBootstrapImpl
 import pl.natusiek.practice.impl.structure.QueueAPI
 
 class UnrankedSelectRoundInventoryProvider(private val bootstrap: PracticeBootstrap, val kit: String) : InventoryProvider {

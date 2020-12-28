@@ -20,16 +20,14 @@ class KitRepositoryImpl(private val bootstrap: PracticeBootstrap) : KitRepositor
 
     init {
         if (!this.folder.exists()) this.folder.mkdirs()
-        this.folder.listFiles()
-            .map { ConfigurationService.gson.fromJson(it.readText(), KitStructure::class.java) }
-            .map { KitImpl(it.name, it.icon, KitEquipmentImpl(InventorySerializer.deserializeInventory(it.armor), InventorySerializer.deserializeInventory(it.contents))) }
-            .forEach { this.kits.add(it) }
+        this.refresh()
     }
 
     override fun createKit(structure: KitStructure) {
         val kit = KitImpl(
             structure.name,
             structure.icon,
+            structure.settings,
             KitEquipmentImpl(
                 InventorySerializer.deserializeInventory(structure.armor),
                 InventorySerializer.deserializeInventory(structure.contents)
@@ -42,6 +40,14 @@ class KitRepositoryImpl(private val bootstrap: PracticeBootstrap) : KitRepositor
     override fun removeKit(kit: Kit) {
         this.kits.remove(kit)
         ConfigurationService.removeFile(File(this.folder, kit.name))
+    }
+
+    override fun refresh() {
+        this.kits.clear()
+        this.folder.listFiles()
+            .map { ConfigurationService.gson.fromJson(it.readText(), KitStructure::class.java) }
+            .map { KitImpl(it.name, it.icon, it.settings, KitEquipmentImpl(InventorySerializer.deserializeInventory(it.armor), InventorySerializer.deserializeInventory(it.contents))) }
+            .forEach { this.kits.add(it) }
     }
 
     override fun getKitBy(block: (Kit) -> Boolean): Kit? = this.kits.find(block)

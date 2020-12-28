@@ -23,7 +23,6 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrap): QueueReposi
     override val queues: MutableSet<Queue> = mutableSetOf()
     override var number: Int = 0
 
-
     override fun joinToQueue(player: Player, kit: String, type: MatchType, size: MatchSize, round: MatchRound) {
         val queue = this.searchOrCreateQueue(kit, type, size, round)
             ?: return player.sendTitle("", "&cPoczekaj chwilę, jest zbyt dużo kolejek!", 60)
@@ -63,13 +62,14 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrap): QueueReposi
 
     override fun removeQueue(queue: Queue) { this.queues.remove(queue) }
 
-    override fun getSizeQueueByRound(round: MatchRound, type: MatchType): Int {
-        return this.queues.asSequence().filter { it.type === type }.filter { it.round === round }.sumBy { it.entries.size }
-    }
+    override fun getQueueByType(type: MatchType): Sequence<Queue> = this.queues.asSequence().filter { it.type === type }
 
-    override fun getSizeQueueByKit(kit: String, type: MatchType): Int {
-        return this.queues.asSequence().filter { it.type == type }.filter { it.kit == it.kit }.sumBy { it.entries.size }
-    }
+    override fun getSizeQueueByRound(round: MatchRound, type: MatchType): Int = this.getQueueByType(type).filter { it.round === round }.count()
+
+    override fun getSizeQueueByKit(kit: String, type: MatchType): Int = this.getQueueByType(type).filter { it.kit == it.kit }.count()
+
+    override fun getSizeQueueBySize(size: MatchSize, type: MatchType): Int = this.getQueueByType(type).filter { it.size == size }.count()
+
 
     override fun searchOrCreateQueue(kit: String, type: MatchType, size: MatchSize, round: MatchRound): Queue? {
         if (this.queues.size > 20) return null

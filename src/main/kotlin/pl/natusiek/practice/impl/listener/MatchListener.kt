@@ -8,6 +8,8 @@ import pl.natusiek.module.common.extension.sendMessages
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.event.match.default.EndMatchEvent
 import pl.natusiek.practice.api.event.match.default.StartMatchEvent
+import pl.natusiek.practice.api.structure.match.Match
+import pl.natusiek.practice.api.structure.match.Match.MatchState
 import pl.natusiek.practice.api.structure.match.MatchTeam.*
 import pl.natusiek.practice.api.structure.member.MemberProfile.*
 import pl.natusiek.practice.impl.structure.KitAPI
@@ -28,6 +30,7 @@ class MatchListener(private val bootstrap: PracticeBootstrap) : Listener {
             MemberAPI.assignItem(it, MemberState.IN_GAME)
             kit.fillInventoryByKit(it)
         }
+        match.state = MatchState.STARTING
     }
 
     @EventHandler

@@ -1,4 +1,4 @@
-package pl.natusiek.practice.impl.inventory.unranked
+package pl.natusiek.practice.impl.inventory.queue.unranked
 
 import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
@@ -26,7 +26,7 @@ class UnrankedSelectKitInventoryProvider(private val bootstrap: PracticeBootstra
     override fun init(player: Player, contents: InventoryContents) {
         contents.fillBorder()
 
-        this.bootstrap.kitRepository.kits.forEach {
+        this.bootstrap.kitRepository.kits.filter { !it.settings.ranked }.forEach {
             contents.add(ClickableItem.of(it.icon.toItem(
                 arrayListOf(
                     "",

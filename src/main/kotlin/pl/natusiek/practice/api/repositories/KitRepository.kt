@@ -14,6 +14,7 @@ interface KitRepository {
 
     fun removeKit(kit: Kit)
 
+    fun refresh()
 
     fun getKitBy(block: (Kit) -> Boolean): Kit?
 

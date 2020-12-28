@@ -10,7 +10,7 @@ data class MemberProfileImpl(
     override val uniqueId: UUID
 ) : MemberProfile, DatabaseEntity() {
 
-    override val state: MemberState = MemberState.LOBBY
+    override var state: MemberState = MemberState.LOBBY
 
 
     override val id: String get() = this.uniqueId.toString()

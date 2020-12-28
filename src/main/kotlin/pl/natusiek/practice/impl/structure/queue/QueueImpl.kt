@@ -1,13 +1,10 @@
 package pl.natusiek.practice.impl.structure.queue
 
-import org.bukkit.scheduler.BukkitRunnable
-import pl.natusiek.module.common.helper.DataHelper
+
 import pl.natusiek.practice.api.structure.match.Match.*
-import pl.natusiek.practice.api.structure.match.MatchTeam
 import pl.natusiek.practice.api.structure.match.MatchTeam.*
 import pl.natusiek.practice.api.structure.queue.Queue
 import pl.natusiek.practice.api.structure.queue.QueueEntry
-import pl.natusiek.practice.impl.PracticeAPI
 import pl.natusiek.practice.impl.structure.ArenaAPI
 import pl.natusiek.practice.impl.structure.MatchAPI
 import pl.natusiek.practice.impl.structure.match.MatchImpl
@@ -40,7 +37,7 @@ data class QueueImpl(
                 this.type = this@QueueImpl.type
                 this.round = this@QueueImpl.round
             }
-        MatchAPI.createMatch(match, arena)
+        MatchAPI.createMatch(match)
     }
 
     override fun getEntryByMember(uniqueId: UUID): QueueEntry? = this.entries.singleOrNull { it.members.firstOrNull { it == uniqueId } != null }

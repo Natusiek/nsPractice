@@ -14,7 +14,6 @@ class KitCommand(private val bootstrap: PracticeBootstrap): BaseCommand() {
     @CatchUnknown
     @Subcommand("help")
     fun onHelp(sender: Player) {
-
         val kits = this.bootstrap.kitRepository.kits.joinToString { "&f${it.name}" }
 
         sender.sendMessages(
@@ -24,6 +23,7 @@ class KitCommand(private val bootstrap: PracticeBootstrap): BaseCommand() {
             " &7/kit utworz &8(&ename&8) &0- &fTworzysz kit",
             " &7/kit usun &8(&ename&8) &0- &fUsuwasz kit",
             " &7/kit pokaz &8(&ename&8) &0- &fZobacz kit",
+            " &7/kit ustawienia &8(&ename&8) &0- &fUstawienia kitu",
             "",
             "  &7* &eKity&8: &f$kits",
             "",

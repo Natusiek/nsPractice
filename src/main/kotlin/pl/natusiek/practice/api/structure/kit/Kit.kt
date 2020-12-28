@@ -7,6 +7,7 @@ interface Kit {
 
     val name: String
     val icon: ItemStructure
+    val settings: KitSettings
     val equipment: KitEquipment
 
     fun fillInventoryByKit(player: Player)

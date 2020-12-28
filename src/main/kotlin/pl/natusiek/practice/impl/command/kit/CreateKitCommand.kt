@@ -11,6 +11,8 @@ import pl.natusiek.module.common.configuration.structure.KitStructure
 import pl.natusiek.module.common.extension.sendMessages
 import pl.natusiek.module.common.helper.serializer.InventorySerializer
 import pl.natusiek.practice.api.PracticeBootstrap
+import pl.natusiek.practice.impl.structure.kit.KitEquipmentImpl
+import pl.natusiek.practice.impl.structure.kit.KitSettingsImpl
 
 @CommandAlias("kit|zestaw")
 @CommandPermission("practice.command.kit")
@@ -26,14 +28,13 @@ class CreateKitCommand(private val bootstrap: PracticeBootstrap): BaseCommand() 
             ?: return sender.sendMessages("&4ups! &fMusisz trzymać coś w dłoni")
 
         val item = ItemStructure(itemInHand)
-        val inventory = sender.inventory
-        val armor = InventorySerializer.serializeInventory(inventory.armorContents)
-        val contents = InventorySerializer.serializeInventory(inventory.contents)
+        val settings = KitSettingsImpl(party = false, ranked = false, build = false)
+        val armor = InventorySerializer.serializeInventory(sender.inventory.armorContents)
+        val contents = InventorySerializer.serializeInventory(sender.inventory.contents)
 
-        val structure = KitStructure(name, item, armor, contents)
+        val structure = KitStructure(name, item, settings, armor, contents)
         this.bootstrap.kitRepository.createKit(structure)
-        sender.sendMessages(" &8* &fUtworzono kit: ${structure.name}")
-
+        sender.sendMessages(" &8* &fUtworzono kit: ${structure.name}", " &4PAMIETAJ, &fżeby zmienić ustawienia kitu &e/kit ustawienia &8(&ename&8)")
     }
 
 }
