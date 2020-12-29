@@ -13,6 +13,8 @@ import java.io.File
 class ArenaRepositoryImpl(private val bootstrap: PracticeBootstrap) : ArenaRepository {
 
     override val arenas: HashSet<ArenaProfile> = hashSetOf()
+    override val arenasBuilds: HashMap<ArenaProfile, World> = hashMapOf()
+
     override val folder: File = File(this.bootstrap.plugin.dataFolder, "arenas")
 
     init {
@@ -26,11 +28,11 @@ class ArenaRepositoryImpl(private val bootstrap: PracticeBootstrap) : ArenaRepos
     override fun getArenaByName(name: String): ArenaProfile? = this.arenas.singleOrNull { it.name == name }
 
 
-    override fun createWorld(arena: ArenaProfile) {
-        val name = arena.name
+    override fun createWorld(arena: ArenaProfile, id: String): World {
+        val name = arena.name + id
         FileUtils.copyDirectory(File(this.folder, name), File(this.bootstrap.plugin.server.worldContainer, name))
 
-        WorldCreator(name)
+        val world = WorldCreator(name)
             .environment(World.Environment.NORMAL)
             .generateStructures(false)
             .type(WorldType.FLAT)
@@ -42,6 +44,17 @@ class ArenaRepositoryImpl(private val bootstrap: PracticeBootstrap) : ArenaRepos
                 this.animalSpawnLimit = 0
                 setSpawnFlags(false, false)
             }
+        return world
+    }
+
+    override fun createBuildWorld(arena: ArenaProfile, id: String) {
+        val world = createWorld(arena, id)
+
+        this.arenasBuilds[arena] = world
+    }
+
+    override fun removeArena(arena: ArenaProfile) {
+
     }
 
 }

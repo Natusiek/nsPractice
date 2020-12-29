@@ -23,4 +23,6 @@ interface PracticeBootstrap {
 
     fun registerListeners()
 
+    fun registerTask()
+
 }

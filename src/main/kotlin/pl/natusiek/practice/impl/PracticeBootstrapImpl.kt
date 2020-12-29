@@ -15,6 +15,9 @@ import pl.natusiek.practice.impl.structure.MatchAPI
 import pl.natusiek.practice.impl.structure.MemberAPI
 import pl.natusiek.practice.impl.structure.QueueAPI
 import pl.natusiek.practice.impl.structure.member.MemberProfileImpl
+import pl.natusiek.practice.impl.task.HidePlayerTask
+import pl.natusiek.practice.impl.task.MatchTask
+import pl.natusiek.practice.impl.task.QueueTask
 
 class PracticeBootstrapImpl(override val plugin: PracticePlugin): PracticeBootstrap {
 
@@ -33,6 +36,7 @@ class PracticeBootstrapImpl(override val plugin: PracticePlugin): PracticeBootst
 
         this.registerCommands()
         this.registerListeners()
+        this.registerTask()
 
         KitAPI.kitRepository = this.kitRepository
         MatchAPI.matchRepository = this.matchRepository
@@ -62,6 +66,12 @@ class PracticeBootstrapImpl(override val plugin: PracticePlugin): PracticeBootst
             QueueListener(this),
             PlayerInteractListener(this)
         )
+    }
+
+    override fun registerTask() {
+        HidePlayerTask(this)
+        MatchTask(this)
+        QueueTask(this)
     }
 
 }

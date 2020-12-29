@@ -50,6 +50,12 @@ class KitRepositoryImpl(private val bootstrap: PracticeBootstrap) : KitRepositor
             .forEach { this.kits.add(it) }
     }
 
+    override fun getKits(block: (kit: Kit) -> Unit) {
+        for (kits in this.kits) {
+            block(kits)
+        }
+    }
+
     override fun getKitBy(block: (Kit) -> Boolean): Kit? = this.kits.find(block)
 
     override fun getKitByName(name: String): Kit? = this.getKitBy { it.name == name }

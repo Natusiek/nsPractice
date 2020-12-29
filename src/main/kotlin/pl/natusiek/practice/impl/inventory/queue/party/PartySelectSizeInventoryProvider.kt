@@ -42,6 +42,7 @@ class PartySelectSizeInventoryProvider(private val bootstrap: PracticeBootstrap,
     }
 
     override fun update(player: Player, contents: InventoryContents) {
-        TODO("Not yet implemented")
+
     }
+
 }

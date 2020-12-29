@@ -1,5 +1,6 @@
 package pl.natusiek.practice.api.repositories
 
+import pl.natusiek.practice.api.structure.arena.ArenaProfile
 import pl.natusiek.practice.api.structure.match.Match
 import pl.natusiek.practice.api.structure.match.Match.*
 

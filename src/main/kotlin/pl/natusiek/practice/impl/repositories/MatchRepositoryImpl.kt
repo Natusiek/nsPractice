@@ -1,17 +1,25 @@
 package pl.natusiek.practice.impl.repositories
 
+import org.bukkit.Bukkit
 import pl.natusiek.practice.api.PracticeBootstrap
 
 import pl.natusiek.practice.api.repositories.MatchRepository
+import pl.natusiek.practice.api.structure.arena.ArenaProfile
 import pl.natusiek.practice.api.structure.match.Match
 import pl.natusiek.practice.api.structure.match.Match.*
+import pl.natusiek.practice.impl.structure.KitAPI
 
 
 class MatchRepositoryImpl(private val bootstrap: PracticeBootstrap) : MatchRepository {
 
     override val matches: MutableSet<Match> = mutableSetOf()
 
-    override fun createMatch(match: Match) { this.matches.add(match) }
+    override fun createMatch(match: Match) {
+        // 30.12.2020 Jak by arena byla (build) zeby zdazyla sie stworzyc i przypalu nie bylo
+        Bukkit.getScheduler().runTaskLater(this.bootstrap.plugin, {
+            this.matches.add(match)
+        }, 5)
+    }
 
     override fun removeMatch(match: Match) { this.matches.remove(match) }
 
