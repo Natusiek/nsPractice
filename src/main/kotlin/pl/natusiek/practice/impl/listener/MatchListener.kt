@@ -12,6 +12,7 @@ import pl.natusiek.practice.api.structure.match.Match
 import pl.natusiek.practice.api.structure.match.Match.MatchState
 import pl.natusiek.practice.api.structure.match.MatchTeam.*
 import pl.natusiek.practice.api.structure.member.MemberProfile.*
+import pl.natusiek.practice.impl.structure.ArenaAPI
 import pl.natusiek.practice.impl.structure.KitAPI
 import pl.natusiek.practice.impl.structure.MemberAPI
 
@@ -47,6 +48,11 @@ class MatchListener(private val bootstrap: PracticeBootstrap) : Listener {
             )
             it.teleport(spawn)
             it.gameMode = GameMode.ADVENTURE
+        }
+        val kit = KitAPI.findKitByName(match.kit)!!
+        if (kit.settings.build) {
+            val arena = ArenaAPI.findArenaByName(match.arena)!!
+            this.bootstrap.arenaRepository.removeArena(arena)
         }
         this.bootstrap.matchRepository.removeMatch(match)
     }

@@ -7,7 +7,7 @@ import java.io.File
 interface ArenaRepository {
 
     val arenas: HashSet<ArenaProfile>
-    val arenasBuilds: HashMap<ArenaProfile, World>
+    val arenasBuilds: HashSet<ArenaProfile>
 
     val folder: File
 
@@ -15,10 +15,10 @@ interface ArenaRepository {
 
     fun getArenaByName(name: String): ArenaProfile?
 
-    fun createWorld(arena: ArenaProfile, id: String): World
+    fun createWorld(arena: ArenaProfile, id: String)
 
     fun createBuildWorld(arena: ArenaProfile, id: String)
 
-    fun removeArena(arena: ArenaProfile)
+    fun removeArena(arena: ArenaProfile, id: String)
 
 }
