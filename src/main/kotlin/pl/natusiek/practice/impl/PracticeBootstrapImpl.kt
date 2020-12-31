@@ -7,6 +7,7 @@ import pl.natusiek.practice.impl.command.kit.KitCommand
 import pl.natusiek.practice.impl.command.kit.RemoveKitCommand
 import pl.natusiek.practice.impl.command.kit.ShowKitCommand
 import pl.natusiek.practice.impl.listener.MatchListener
+import pl.natusiek.practice.impl.listener.MemberListener
 import pl.natusiek.practice.impl.listener.PlayerInteractListener
 import pl.natusiek.practice.impl.listener.QueueListener
 import pl.natusiek.practice.impl.repositories.*
@@ -63,6 +64,7 @@ class PracticeBootstrapImpl(override val plugin: PracticePlugin): PracticeBootst
     override fun registerListeners() {
         this.plugin.registerListeners(
             MatchListener(this),
+            MemberListener(this),
             QueueListener(this),
             PlayerInteractListener(this)
         )

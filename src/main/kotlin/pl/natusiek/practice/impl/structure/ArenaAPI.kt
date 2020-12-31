@@ -6,8 +6,8 @@ object ArenaAPI {
 
     lateinit var arenaRepository: ArenaRepository
 
-    fun findArenaByName(name: String) = this.arenaRepository.getArenaByName(name)
+    fun findArenaByName(name: String) = arenaRepository.getArenaByName(name)
 
-    fun getRandomArena() = this.arenaRepository.getRandomArena()
+    fun getRandomArena() = arenaRepository.getRandomArena()
 
 }

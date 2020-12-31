@@ -9,6 +9,7 @@ import pl.natusiek.module.common.extension.colored
 import pl.natusiek.module.common.extension.fillBorder
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.structure.match.Match.MatchType
+import pl.natusiek.practice.impl.structure.MatchAPI
 import pl.natusiek.practice.impl.structure.QueueAPI
 
 class UnrankedSelectKitInventoryProvider(private val bootstrap: PracticeBootstrap) : InventoryProvider {
@@ -31,7 +32,7 @@ class UnrankedSelectKitInventoryProvider(private val bootstrap: PracticeBootstra
                 contents.add(ClickableItem.of(it.icon.toItem(
                     arrayListOf(
                         "",
-                        " &8* &eW grze: &f0", // TODO: 25.12.2020 Dodać ile jest w grze!
+                        " &8* &eW grze: &f${MatchAPI.getSizeMatchByKit(it.name, MatchType.RANKED)}",
                         " &8* &eW kolejce: &f${QueueAPI.getSizeQueueByKit(it.name, MatchType.UNRANKED)}",
                         ""
                     )

@@ -8,7 +8,6 @@ import pl.natusiek.module.common.extension.sendMessages
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.event.match.default.EndMatchEvent
 import pl.natusiek.practice.api.event.match.default.StartMatchEvent
-import pl.natusiek.practice.api.structure.match.Match
 import pl.natusiek.practice.api.structure.match.Match.MatchState
 import pl.natusiek.practice.api.structure.match.MatchTeam.*
 import pl.natusiek.practice.api.structure.member.MemberProfile.*
@@ -52,7 +51,7 @@ class MatchListener(private val bootstrap: PracticeBootstrap) : Listener {
         val kit = KitAPI.findKitByName(match.kit)!!
         if (kit.settings.build) {
             val arena = ArenaAPI.findArenaByName(match.arena)!!
-            this.bootstrap.arenaRepository.removeArena(arena)
+            this.bootstrap.arenaRepository.removeArena(arena, match.matchId.toString())
         }
         this.bootstrap.matchRepository.removeMatch(match)
     }

@@ -4,6 +4,7 @@ import pl.natusiek.module.database.system.DatabaseEntity
 import pl.natusiek.practice.api.structure.member.MemberProfile
 import pl.natusiek.practice.api.structure.member.MemberProfile.*
 import java.util.*
+import kotlin.collections.HashSet
 
 data class MemberProfileImpl(
     override val name: String,
@@ -11,6 +12,8 @@ data class MemberProfileImpl(
 ) : MemberProfile, DatabaseEntity() {
 
     override var state: MemberState = MemberState.LOBBY
+
+    override val rankeds: HashSet<Elo> = hashSetOf()
 
 
     override val id: String get() = this.uniqueId.toString()

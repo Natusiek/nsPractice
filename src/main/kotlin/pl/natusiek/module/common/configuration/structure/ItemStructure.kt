@@ -19,6 +19,8 @@ class ItemStructure(
         0,
     )
 
-    fun toItem(lore: ArrayList<String>): ItemStack = ItemBuilder(this.material, this.data).name(this.name).amount(this.amount).lore(lore).build()
+    fun toItem(plusname: String, lore: ArrayList<String>): ItemStack = ItemBuilder(this.material, this.data).name(this.name + plusname).amount(this.amount).lore(lore).build()
+
+    fun toItem(lore: ArrayList<String>): ItemStack = this.toItem("", lore)
 
 }

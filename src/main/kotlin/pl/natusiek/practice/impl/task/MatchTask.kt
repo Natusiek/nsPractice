@@ -6,7 +6,6 @@ import org.bukkit.scheduler.BukkitRunnable
 import pl.natusiek.module.common.helper.DataHelper
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.event.match.default.StartMatchEvent
-import pl.natusiek.practice.api.structure.match.Match
 import pl.natusiek.practice.api.structure.match.Match.MatchState
 import pl.natusiek.practice.impl.structure.ArenaAPI
 

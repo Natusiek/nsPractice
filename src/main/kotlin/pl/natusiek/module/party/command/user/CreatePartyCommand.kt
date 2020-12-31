@@ -8,7 +8,6 @@ import org.bukkit.entity.Player
 import pl.natusiek.module.common.extension.sendMessages
 import pl.natusiek.module.party.PartyModule
 import pl.natusiek.module.party.structure.Party
-import pl.natusiek.practice.api.structure.member.MemberProfile
 import pl.natusiek.practice.api.structure.member.MemberProfile.MemberState
 import pl.natusiek.practice.impl.structure.MemberAPI
 

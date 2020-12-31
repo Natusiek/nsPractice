@@ -15,6 +15,9 @@ interface Queue : Serializable {
     val entries: MutableSet<QueueEntry>
     val isOpen: Boolean
 
+    var maxPoints: Int?
+    var minPoints: Int?
+
     fun start()
 
     fun getEntryByMember(uniqueId: UUID): QueueEntry?

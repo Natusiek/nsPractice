@@ -11,6 +11,7 @@ interface QueueEntry : Serializable {
     val leader: UUID
     val members: HashSet<UUID>
 
+    var minute: Int
     val time: Long
     val players: Sequence<Player>
 

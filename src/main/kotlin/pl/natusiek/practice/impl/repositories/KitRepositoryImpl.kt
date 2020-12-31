@@ -8,7 +8,6 @@ import pl.natusiek.module.common.helper.serializer.InventorySerializer
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.repositories.KitRepository
 import pl.natusiek.practice.api.structure.kit.Kit
-import pl.natusiek.practice.impl.PracticeBootstrapImpl
 import pl.natusiek.practice.impl.structure.kit.KitEquipmentImpl
 import pl.natusiek.practice.impl.structure.kit.KitImpl
 import java.io.File
@@ -56,7 +55,7 @@ class KitRepositoryImpl(private val bootstrap: PracticeBootstrap) : KitRepositor
         }
     }
 
-    override fun getKitBy(block: (Kit) -> Boolean): Kit? = this.kits.find(block)
+    override fun getKitBy(block: (Kit) -> Unit): Kit? = this.kits.find(block)
 
     override fun getKitByName(name: String): Kit? = this.getKitBy { it.name == name }
 

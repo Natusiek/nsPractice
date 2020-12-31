@@ -19,6 +19,7 @@ data class QueueEntryImpl(
             .asSequence()
             .mapNotNull { Bukkit.getPlayer(it) }
 
+    override var minute: Int = 2
     override val time: Long = System.currentTimeMillis()
 
 

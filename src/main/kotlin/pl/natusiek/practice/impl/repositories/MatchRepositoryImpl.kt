@@ -4,10 +4,8 @@ import org.bukkit.Bukkit
 import pl.natusiek.practice.api.PracticeBootstrap
 
 import pl.natusiek.practice.api.repositories.MatchRepository
-import pl.natusiek.practice.api.structure.arena.ArenaProfile
 import pl.natusiek.practice.api.structure.match.Match
 import pl.natusiek.practice.api.structure.match.Match.*
-import pl.natusiek.practice.impl.structure.KitAPI
 
 
 class MatchRepositoryImpl(private val bootstrap: PracticeBootstrap) : MatchRepository {

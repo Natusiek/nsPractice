@@ -14,7 +14,6 @@ import pl.natusiek.module.common.extension.colored
 import pl.natusiek.module.common.extension.fillBorder
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.impl.structure.KitAPI
-import java.io.File
 
 class KitSettingsInventoryProvider(private val bootstrap: PracticeBootstrap, val kit: String): InventoryProvider {
 

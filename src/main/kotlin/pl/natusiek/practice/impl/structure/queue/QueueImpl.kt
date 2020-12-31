@@ -25,6 +25,9 @@ data class QueueImpl(
     override val isOpen: Boolean
         get() = this.entries.sumBy { it.members.size } < this.size.number
 
+    override var maxPoints: Int? = null
+    override var minPoints: Int? = null
+
     override fun start() {
         val entryA = this.entries.first()
         val entryB = this.entries.last()
@@ -44,7 +47,7 @@ data class QueueImpl(
                 this.type = this@QueueImpl.type
                 this.round = this@QueueImpl.round
             }
-        MatchAPI.createMatch(match, arena)
+        MatchAPI.createMatch(match)
     }
 
     override fun getEntryByMember(uniqueId: UUID): QueueEntry? = this.entries.singleOrNull { it.members.firstOrNull { it == uniqueId } != null }

@@ -19,15 +19,17 @@ object MemberAPI {
     val items: Array<ItemStack> = arrayOf()
 
     init {
-        this.items.plus(arrayOf(
+        items.plus(arrayOf(
             ItemBuilder(Material.IRON_SWORD).name("&aDołącz do kolejki &8(Nierankingowe)").build(), // 1
             ItemBuilder(Material.FENCE_GATE).name("&4Opuść kolejkę").build(), // 2
             ItemBuilder(Material.BARRIER).name("&cOpuść party").build(), // 3
-            ItemBuilder(Material.GOLD_SWORD).name("&aDołącz do kolejki &8(Party)").build() // 4
+            ItemBuilder(Material.GOLD_SWORD).name("&aDołącz do kolejki &8(Party)").build(), // 4
+            ItemBuilder(Material.DIAMOND_SWORD).name("&aDołacz do kolejki &8(Rankingowa)").build() // 5
         ))
     }
+
     fun assignItem(player: Player, state: MemberState) {
-        this.findMemberById(player.uniqueId).apply { this.state = state }
+        findMemberById(player.uniqueId).apply { this.state = state }
         Bukkit.getScheduler().runTaskLater(PracticeAPI.plugin, {
             player.inventory.apply {
                 when (state) {
@@ -42,6 +44,7 @@ object MemberAPI {
                             }
                         } else {
                             this.setItem(0, this@MemberAPI.items[1])
+                            this.setItem(1, this@MemberAPI.items[5])
                         }
                     }
                     QUEUE -> {
@@ -66,8 +69,8 @@ object MemberAPI {
         }, 3)
     }
 
-    fun findMemberById(uniqueId: UUID) = this.memberRepository.getMemberById(uniqueId)!!
+    fun findMemberById(uniqueId: UUID) = memberRepository.getMemberById(uniqueId)!!
 
-    fun findMemberByName(name: String) = this.memberRepository.getMemberByName(name)!!
+    fun findMemberByName(name: String) = memberRepository.getMemberByName(name)!!
 
 }
