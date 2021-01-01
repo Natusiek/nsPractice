@@ -27,19 +27,17 @@ class UnrankedSelectKitInventoryProvider(private val bootstrap: PracticeBootstra
     override fun init(player: Player, contents: InventoryContents) {
         contents.fillBorder()
 
-        this.bootstrap.kitRepository.getKits {
-            if (!it.settings.ranked) {
-                contents.add(ClickableItem.of(it.icon.toItem(
-                    arrayListOf(
-                        "",
-                        " &8* &eW grze: &f${MatchAPI.getSizeMatchByKit(it.name, MatchType.RANKED)}",
-                        " &8* &eW kolejce: &f${QueueAPI.getSizeQueueByKit(it.name, MatchType.UNRANKED)}",
-                        ""
-                    )
-                )) { _ ->
-                    UnrankedSelectRoundInventoryProvider.getInventory(this.bootstrap, it.name).open(player)
-                })
-            }
+        this.bootstrap.kitRepository.kits.filter { !it.settings.ranked }.forEach {
+            contents.add(ClickableItem.of(it.icon.toItem(
+                arrayListOf(
+                    "",
+                    " &8* &eW grze: &f${MatchAPI.getSizeMatchByKit(it.name, MatchType.RANKED)}",
+                    " &8* &eW kolejce: &f${QueueAPI.getSizeQueueByKit(it.name, MatchType.UNRANKED)}",
+                    ""
+                )
+            )) { _ ->
+                UnrankedSelectRoundInventoryProvider.getInventory(this.bootstrap, it.name).open(player)
+            })
         }
     }
 

@@ -25,7 +25,7 @@ interface QueueRepository {
 
     fun getSizeQueueBySize(size: MatchSize, type: MatchType): Int
 
-    fun searchOrCreateQueue(kit: String, type: MatchType, size: MatchSize, round: MatchRound): Queue?
+    fun searchOrCreateQueue(kit: String, type: MatchType, size: MatchSize, round: MatchRound, points: Int?): Queue?
 
     fun getQueueBy(block: (Queue) -> Boolean): Queue?
 

@@ -14,6 +14,7 @@ import pl.natusiek.practice.api.structure.match.Match.*
 import pl.natusiek.practice.api.structure.match.Match.MatchSize.*
 import pl.natusiek.practice.api.structure.queue.Queue
 import pl.natusiek.practice.api.structure.queue.QueueEntry
+import pl.natusiek.practice.impl.structure.MemberAPI
 import pl.natusiek.practice.impl.structure.queue.QueueEntryImpl
 import pl.natusiek.practice.impl.structure.queue.QueueImpl
 import java.util.*
@@ -24,7 +25,12 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrap): QueueReposi
     override var number: Int = 0
 
     override fun joinToQueue(player: Player, kit: String, type: MatchType, size: MatchSize, round: MatchRound) {
-        val queue = this.searchOrCreateQueue(kit, type, size, round)
+        val points: Int? =
+            if (type === MatchType.RANKED)
+                this.bootstrap.memberRepository.getMemberById(player.uniqueId)!!.rankeds.singleOrNull { it.kit == kit }!!.points
+            else null
+
+        val queue = this.searchOrCreateQueue(kit, type, size, round, points)
             ?: return player.sendTitle("", "&cPoczekaj chwilę, jest zbyt dużo kolejek!", 60)
 
         val entry: QueueEntry =
@@ -71,7 +77,7 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrap): QueueReposi
     override fun getSizeQueueBySize(size: MatchSize, type: MatchType): Int = this.getQueueByType(type).filter { it.size == size }.count()
 
 
-    override fun searchOrCreateQueue(kit: String, type: MatchType, size: MatchSize, round: MatchRound): Queue? {
+    override fun searchOrCreateQueue(kit: String, type: MatchType, size: MatchSize, round: MatchRound, points: Int?): Queue? {
         if (this.queues.size > 20) return null
 
         val queue = this.queues
@@ -80,8 +86,22 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrap): QueueReposi
             .filter { it.type === type }
             .filter { it.size === size }
             .filter { it.round === round }
+            .filter {
+                if (points != null) {
+                    it.maxPoints!! > points + 15 && it.minPoints!! < points - 15
+                } else {
+                    it.maxPoints == null && it.minPoints == null
+                }
+            }
             .firstOrNull { it.isOpen }
-                ?: return QueueImpl(this.number++, kit, type, size, round).also { this.queues.add(it) }
+                ?: return QueueImpl(this.number++, kit, type, size, round)
+                    .apply {
+                        //if (this.type === MatchType.RANKED) {
+                        if (points != null) {
+                            this.maxPoints = points + 15
+                            this.minPoints = points - 15
+                        }
+                    }.also { this.queues.add(it) }
 
        return queue
     }

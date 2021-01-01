@@ -16,9 +16,7 @@ interface KitRepository {
 
     fun refresh()
 
-    fun getKits(block: (kit: Kit) -> Unit)
-
-    fun getKitBy(block: (Kit) -> Unit)
+    fun getKitBy(block: (Kit) -> Boolean): Kit?
 
     fun getKitByName(name: String): Kit?
 

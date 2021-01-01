@@ -30,25 +30,23 @@ class RankedSelectKitInventoryProvider(private val bootstrap: PracticeBootstrap)
             member.rankeds.addAll(this.bootstrap.kitRepository.kits.filter { it.settings.ranked }.map { Elo(it.name, 1000) })
             getInventory(this.bootstrap).open(player)
         }
-        this.bootstrap.kitRepository.getKitBy { kit ->
-            if (kit.settings.ranked) {
-                val elo = member.rankeds.singleOrNull { it.kit == kit.name }
-                if (elo == null) {
-                    member.rankeds.add(Elo(kit.name, 1000))
-                    getInventory(this.bootstrap).open(player)
-                }
-                contents.add(ClickableItem.of(kit.icon.toItem(" &8(&f${elo!!.points}&6pkt&8)",
-                    arrayListOf(
-                        "",
-                        " &8* &eW grze: &f${MatchAPI.getSizeMatchByKit(kit.name, MatchType.RANKED)}",
-                        " &8* &eW kolejce: &f${QueueAPI.getSizeQueueByKit(kit.name, MatchType.RANKED)}",
-                        ""
-                    )
-                )) {
-                    player.closeInventory()
-                    this.bootstrap.queueRepository.joinToQueue(player, kit.name, MatchType.RANKED, MatchSize.SOLO, MatchRound.BO1)
-                })
+        this.bootstrap.kitRepository.kits.filter { it.settings.ranked }.forEach { kit ->
+            val elo = member.rankeds.singleOrNull { it.kit == kit.name }
+            if (elo == null) {
+                member.rankeds.add(Elo(kit.name, 1000))
+                getInventory(this.bootstrap).open(player)
             }
+            contents.add(ClickableItem.of(kit.icon.toItem(" &8(&f${elo!!.points}&6pkt&8)",
+                arrayListOf(
+                    "",
+                    " &8* &eW grze: &f${MatchAPI.getSizeMatchByKit(kit.name, MatchType.RANKED)}",
+                    " &8* &eW kolejce: &f${QueueAPI.getSizeQueueByKit(kit.name, MatchType.RANKED)}",
+                    ""
+                )
+            )) {
+                player.closeInventory()
+                this.bootstrap.queueRepository.joinToQueue(player, kit.name, MatchType.RANKED, MatchSize.SOLO, MatchRound.BO1)
+            })
         }
 
     }

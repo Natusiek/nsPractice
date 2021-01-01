@@ -25,21 +25,18 @@ class PartySelectKitInventoryProvider(private val bootstrap: PracticeBootstrap) 
 
     override fun init(player: Player, contents: InventoryContents) {
         contents.fillBorder()
-        this.bootstrap.kitRepository.getKits {
-            if (it.settings.party) {
-                contents.add(ClickableItem.of(it.icon.toItem(
-                    arrayListOf(
-                        "",
-                        " &8* &eW grze: &f${MatchAPI.getSizeMatchByKit(it.name, MatchType.PARTY)}",
-                        " &8* &eW kolejce: &f${QueueAPI.getSizeQueueByKit(it.name, MatchType.PARTY)}",
-                        ""
-                    )
-                )) { _ ->
-                    PartySelectRoundInventoryProvider.getInventory(this.bootstrap, it.name).open(player)
-                })
-            }
+        this.bootstrap.kitRepository.kits.filter { it.settings.party }.forEach {
+            contents.add(ClickableItem.of(it.icon.toItem(
+                arrayListOf(
+                    "",
+                    " &8* &eW grze: &f${MatchAPI.getSizeMatchByKit(it.name, MatchType.PARTY)}",
+                    " &8* &eW kolejce: &f${QueueAPI.getSizeQueueByKit(it.name, MatchType.PARTY)}",
+                    ""
+                )
+            )) { _ ->
+                PartySelectRoundInventoryProvider.getInventory(this.bootstrap, it.name).open(player)
+            })
         }
-
     }
 
     override fun update(player: Player, contents: InventoryContents) {
