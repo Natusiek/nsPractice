@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import pl.natusiek.module.common.builder.LocationBuilder
 import pl.natusiek.module.common.extension.sendMessages
+import pl.natusiek.module.saveeq.EquipmentAPI
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.event.match.default.EndMatchEvent
 import pl.natusiek.practice.api.event.match.default.StartMatchEvent
@@ -22,13 +23,12 @@ class MatchListener(private val bootstrap: PracticeBootstrap) : Listener {
         val match = event.match
         val arena = event.arena
 
-        arena.teleport(match.teamBlue.players.toHashSet(), TeamType.BLUE)
-        arena.teleport(match.teamRed.players.toHashSet(), TeamType.RED)
+        arena.teleport(match.teamBlue.players, TeamType.BLUE)
+        arena.teleport(match.teamRed.players, TeamType.RED)
 
-        val kit = KitAPI.findKitByName(match.kit)!!
         match.players.forEach {
             MemberAPI.assignItem(it, MemberState.IN_GAME)
-            kit.fillInventoryByKit(it)
+            EquipmentAPI.fillInventoryByKit(it, match.kit)
         }
         match.state = MatchState.STARTING
     }

@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 import pl.natusiek.module.party.PartyAPI
 import pl.natusiek.practice.api.PracticeBootstrap
 import pl.natusiek.practice.api.structure.member.MemberProfile.*
+import pl.natusiek.practice.impl.inventory.kit.SaveEquipmentInventoryProvider
 import pl.natusiek.practice.impl.inventory.queue.party.PartySelectKitInventoryProvider
 import pl.natusiek.practice.impl.inventory.queue.ranked.RankedSelectKitInventoryProvider
 import pl.natusiek.practice.impl.inventory.queue.unranked.UnrankedSelectKitInventoryProvider
@@ -32,6 +33,7 @@ class PlayerInteractListener(private val bootstrap: PracticeBootstrap): Listener
             items[3] -> this.bootstrap.queueRepository.leaveFromQueue(player).also { PartyAPI.leaveFromParty(player) }
             items[4] -> PartySelectKitInventoryProvider.getInventory(this.bootstrap).open(player)
             items[5] -> RankedSelectKitInventoryProvider.getInventory(this.bootstrap).open(player)
+            items[6] -> SaveEquipmentInventoryProvider.getInventory(this.bootstrap).open(player)
             else -> {
 
             }

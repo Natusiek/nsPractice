@@ -11,7 +11,7 @@ interface ArenaProfile {
     val spawnA: ArenaLocation
     val spawnB: ArenaLocation
 
-    fun teleport(players: HashSet<Player>, team: TeamType)
+    fun teleport(players: Sequence<Player>, team: TeamType)
 
 
     data class ArenaLocation(val x: Double, val y: Double, val z: Double) {

@@ -24,7 +24,8 @@ object MemberAPI {
             ItemBuilder(Material.FENCE_GATE).name("&4Opuść kolejkę").build(), // 2
             ItemBuilder(Material.BARRIER).name("&cOpuść party").build(), // 3
             ItemBuilder(Material.GOLD_SWORD).name("&aDołącz do kolejki &8(Party)").build(), // 4
-            ItemBuilder(Material.DIAMOND_SWORD).name("&aDołacz do kolejki &8(Rankingowa)").build() // 5
+            ItemBuilder(Material.DIAMOND_SWORD).name("&aDołacz do kolejki &8(Rankingowa)").build(), // 5
+            ItemBuilder(Material.ANVIL).name("&eUstaw swoj ekwipunek").build() // 6
         ))
     }
 
@@ -46,6 +47,7 @@ object MemberAPI {
                             this.setItem(0, this@MemberAPI.items[1])
                             this.setItem(1, this@MemberAPI.items[5])
                         }
+                        this.setItem(7, this@MemberAPI.items[6])
                     }
                     QUEUE -> {
                         this.clear()

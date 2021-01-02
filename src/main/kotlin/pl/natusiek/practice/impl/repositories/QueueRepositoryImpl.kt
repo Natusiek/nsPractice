@@ -2,6 +2,7 @@ package pl.natusiek.practice.impl.repositories
 
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import pl.natusiek.module.common.extension.sendMessages
 import pl.natusiek.module.common.extension.sendTitle
 import pl.natusiek.module.party.PartyAPI
 import pl.natusiek.module.party.structure.Party.*
@@ -12,6 +13,8 @@ import pl.natusiek.practice.api.event.queue.default.LeaveQueueEvent
 import pl.natusiek.practice.api.repositories.QueueRepository
 import pl.natusiek.practice.api.structure.match.Match.*
 import pl.natusiek.practice.api.structure.match.Match.MatchSize.*
+import pl.natusiek.practice.api.structure.member.MemberProfile
+import pl.natusiek.practice.api.structure.member.MemberProfile.*
 import pl.natusiek.practice.api.structure.queue.Queue
 import pl.natusiek.practice.api.structure.queue.QueueEntry
 import pl.natusiek.practice.impl.structure.MemberAPI
@@ -53,6 +56,10 @@ class QueueRepositoryImpl(private val bootstrap: PracticeBootstrap): QueueReposi
                     QueueEntryImpl(party.tag, player.uniqueId, members)
                 }
             }
+        val members = entry.members.map { MemberAPI.findMemberById(it) }
+        if (members.any { it.state !== MemberState.LOBBY })
+            return entry.players.forEach { it.sendMessages("", " &4Próbowano dołączyć, ale nie wszyscy są w lobby! &8(&f${members.filter { it.state !== MemberState.LOBBY }.joinToString { it.name}}", "") }
+
         queue.entries.add(entry)
         entry.sendTitle("", "&aDołączyłeś do kolejki!")
         Bukkit.getPluginManager().callEvent(JoinQueueEvent(queue, entry.players))

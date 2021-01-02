@@ -27,7 +27,7 @@ class QueueTask(private val bootstrap: PracticeBootstrap): BukkitRunnable() {
                         if (queue.entries.isEmpty()) {
                             this.bootstrap.queueRepository.removeQueue(queue)
                         } else {
-                            // 01.01.2021 Dodalem do dla bezpieczenstwa
+                            // 01.01.2021 Dodalem to dla bezpieczenstwa
                             if (it.isOpen) return it.start()
 
                             queue.entries.add(entry)

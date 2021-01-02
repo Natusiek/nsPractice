@@ -7,7 +7,7 @@ import java.util.*
 import kotlin.collections.HashSet
 
 data class MemberProfileImpl(
-    override val name: String,
+    override var name: String,
     override val uniqueId: UUID
 ) : MemberProfile, DatabaseEntity() {
 

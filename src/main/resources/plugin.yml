@@ -1,0 +1,5 @@
+name: nsPractice
+main: pl.natusiek.practice.impl.PracticePlugin
+version: 1.0
+author: Natusiek
+depend: ['SmartInvs']

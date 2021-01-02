@@ -16,9 +16,7 @@ class HidePlayerTask(private val bootstrap: PracticeBootstrap): BukkitRunnable()
                 Bukkit.getOnlinePlayers()
                     .minus(match.players)
                     .filter { it.world.name == match.arena }
-                    .forEach {
-                        player.hidePlayer(it)
-                    }
+                    .forEach { player.hidePlayer(it) }
             }
         }
     }

@@ -11,7 +11,7 @@ data class ArenaProfileImpl(
     override val spawnB: ArenaProfile.ArenaLocation
 ) : ArenaProfile {
 
-    override fun teleport(players: HashSet<Player>, team: TeamType) {
+    override fun teleport(players: Sequence<Player>, team: TeamType) {
         when (team) {
             TeamType.BLUE -> players.forEach { it.teleport(this.spawnA.toLocation(this.world)) }
             TeamType.RED -> players.forEach { it.teleport(this.spawnB.toLocation(this.world)) }
