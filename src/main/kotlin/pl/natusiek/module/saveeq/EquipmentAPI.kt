@@ -8,6 +8,7 @@ object EquipmentAPI {
 
     lateinit var equipmentRepository: EquipmentRepository
 
+
     fun startSaveEquipment(player: Player, kit: String) = this.equipmentRepository.addSaver(Saver(player.uniqueId, kit))
 
     fun fillInventoryByKit(player: Player, kit: String) = this.equipmentRepository.fillInventoryByKit(player, kit)

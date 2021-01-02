@@ -27,7 +27,7 @@ class EquipmentRepository(private val module: SaveEquipmentModule) {
 
     fun fillInventoryByKit(player: Player, name: String) {
         val member = MemberAPI.findMemberById(player.uniqueId)
-        val equipment = member.equipment.equipments.singleOrNull { it.name == name }
+        val equipment = member.equipments.singleOrNull { it.name == name }
 
         if (equipment != null) {
             player.inventory.apply {

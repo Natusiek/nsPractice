@@ -25,7 +25,8 @@ object MemberAPI {
             ItemBuilder(Material.BARRIER).name("&cOpuść party").build(), // 3
             ItemBuilder(Material.GOLD_SWORD).name("&aDołącz do kolejki &8(Party)").build(), // 4
             ItemBuilder(Material.DIAMOND_SWORD).name("&aDołacz do kolejki &8(Rankingowa)").build(), // 5
-            ItemBuilder(Material.ANVIL).name("&eUstaw swoj ekwipunek").build() // 6
+            ItemBuilder(Material.ANVIL).name("&eUstaw swoj ekwipunek").build(), // 6
+            ItemBuilder(Material.NAME_TAG).name("&dMenu party").build(), // 7
         ))
     }
 
@@ -43,6 +44,7 @@ object MemberAPI {
                             } else {
                                 this.setItem(0, this@MemberAPI.items[3])
                             }
+                            this.setItem(3, this@MemberAPI.items[7])
                         } else {
                             this.setItem(0, this@MemberAPI.items[1])
                             this.setItem(1, this@MemberAPI.items[5])
@@ -68,7 +70,7 @@ object MemberAPI {
                 }
             }
             player.updateInventory()
-        }, 3)
+        }, 2)
     }
 
     fun findMemberById(uniqueId: UUID) = memberRepository.getMemberById(uniqueId)!!

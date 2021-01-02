@@ -1,6 +1,6 @@
 package pl.natusiek.practice.api.structure.member
 
-import pl.natusiek.module.saveeq.structure.MemberEquipment
+import pl.natusiek.module.saveeq.structure.Equipment
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.HashSet
@@ -14,7 +14,7 @@ interface MemberProfile : Serializable {
 
     val rankeds: HashSet<Elo>
 
-    val equipment: MemberEquipment
+    val equipments: HashSet<Equipment>
 
 
     enum class MemberState { ANY, LOBBY, SAVING, QUEUE, IN_GAME }

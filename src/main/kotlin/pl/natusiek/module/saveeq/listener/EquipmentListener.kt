@@ -33,7 +33,7 @@ class EquipmentListener(private val module: SaveEquipmentModule): Listener {
     fun onStopSaving(event: StopSavingEvent) {
         val player = event.player
         if (event.successful) {
-            val equipments = MemberAPI.findMemberById(player.uniqueId).equipment.equipments
+            val equipments = MemberAPI.findMemberById(player.uniqueId).equipments
             val kit = event.kit
             val equipment = equipments.singleOrNull { it.name == kit }
             if (equipment == null) {

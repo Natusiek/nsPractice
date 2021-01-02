@@ -34,6 +34,7 @@ class PlayerInteractListener(private val bootstrap: PracticeBootstrap): Listener
             items[4] -> PartySelectKitInventoryProvider.getInventory(this.bootstrap).open(player)
             items[5] -> RankedSelectKitInventoryProvider.getInventory(this.bootstrap).open(player)
             items[6] -> SaveEquipmentInventoryProvider.getInventory(this.bootstrap).open(player)
+            items[7] -> PartyAPI.openInventory(player)
             else -> {
 
             }
